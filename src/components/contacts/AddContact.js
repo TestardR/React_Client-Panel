@@ -15,7 +15,7 @@ class AddContact extends Component {
     e.preventDefault();
     const { name, email, phone } = this.state;
 
-    // Checkf for Errors
+    // Check for Errors
     if (name === '') {
       this.setState({ errors: { name: 'Name is required' } });
       return;
