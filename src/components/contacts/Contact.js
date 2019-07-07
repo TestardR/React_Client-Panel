@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import { Consumer } from '../../context';
 
@@ -13,7 +14,6 @@ class Contact extends Component {
       showContactInfo: false
     };
     this.onShowClick = this.onShowClick.bind(this);
-    this.onDeleteClick = this.onDeleteClick.bind(this);
   }
 
   onShowClick() {
@@ -22,9 +22,14 @@ class Contact extends Component {
     });
   }
 
-  onDeleteClick(id, dispatch) {
-    dispatch({ type: 'DELETE_CONTACT', payload: id });
-  }
+  onDeleteClick = async (id, dispatch) => {
+    try {
+      await axios.delete(`https://jsonplaceholder.typicode.com/users/${id}`);
+      dispatch({ type: 'DELETE_CONTACT', payload: id });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   render() {
     const { id, name, email, phone } = this.props.contact;
